@@ -35,6 +35,7 @@
 class graphite_reporter (
   $graphite_host  = '127.0.0.1',
   $graphite_port  = 2003,
+  $prefix         = 'puppet.agent.',
   $config_file    = '/etc/puppet/graphite.yaml',
 ){
 

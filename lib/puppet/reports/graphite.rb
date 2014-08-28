@@ -10,6 +10,7 @@ Puppet::Reports.register_report(:graphite) do
   config = YAML.load_file(configfile)
   GRAPHITE_SERVER = config[:graphite_server]
   GRAPHITE_PORT = config[:graphite_port]
+  PREFIX = config[:prefix]
 
   desc <<-DESC
   Send notification of failed reports to a Graphite server via socket.
@@ -23,11 +24,12 @@ Puppet::Reports.register_report(:graphite) do
 
   def process
     Puppet.debug "Sending status for #{self.host} to Graphite server at #{GRAPHITE_SERVER}"
-    prefix = self.host.split(".").reverse.join(".")
+    node = self.host.split(".").reverse.join(".")
+    prefix = "#{PREFIX}#{node}"
     epochtime = Time.now.utc.to_i
     self.metrics.each { |metric,data|
-      data.values.each { |val| 
-        name = "#{prefix}.puppet.#{val[1]}_#{metric}"
+      data.values.each { |val|
+        name = "#{prefix}.#{val[1]}_#{metric}"
         value = val[2]
 
         send_metric "#{name} #{value} #{epochtime}"
