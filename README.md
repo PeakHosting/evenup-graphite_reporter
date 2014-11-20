@@ -15,11 +15,11 @@ Requirements
 Installation & Usage
 --------------------
 
-1.  Install puppet_graphite as a module in your Puppet master's module path.
+1.  Install graphite_reporter as a module in your Puppet master's module path.
 
 2.  Include the puppet class:
 
-        class { 'puppet_graphite':
+        class { 'graphite_reporter':
           graphite_host =>  'graphite.mycompany.com'
         }
 
